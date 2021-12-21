@@ -235,10 +235,11 @@ ScrollTrigger.create({
 
 sun2.to("#sun", { attr: { offset: "0.6" } }, 0)
 sun2.to("#bg_grad stop:nth-child(2)", { attr: { offset: "0.7" } }, 0)
-sun2.to("#sun", { attr: { "stop-color": "#f4f5e7" } }, 0)
+sun2.to("#sun", { attr: { "stop-color": "#efefef" } }, 0)
 sun2.to("#lg4 stop:nth-child(1)", { attr: { "stop-color": "#623951" } }, 0)
 sun2.to("#lg4 stop:nth-child(2)", { attr: { "stop-color": "#261F36" } }, 0)
-sun2.to("#bg_grad stop:nth-child(6)", { attr: { "stop-color": "#0b3171" } }, 0)
+sun2.to("#bg_grad stop:nth-child(5)", { attr: { "stop-color": "#063093" } }, 0)
+sun2.to("#bg_grad stop:nth-child(6)", { attr: { "stop-color": "#07205a" } }, 0)
 
 
 /* S2 Text */
@@ -411,7 +412,7 @@ function s2Scroll() {
 }
 function s3Scroll() {
 	gsap.to(window, {
-		duration: 2,
+		duration: 5,
 		scrollTo: '.S4Card',
 		ease: "sine.in",
 	});
