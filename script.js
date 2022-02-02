@@ -82,6 +82,9 @@ const app = new Vue({
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 gsap.registerPlugin(ScrollToPlugin);
 
+gsap.config({
+	force3D: true,
+});
 let speed = 100;
 
 /*  SCENE 1 */
@@ -90,32 +93,11 @@ ScrollTrigger.create({
 	animation: scene1,
 	trigger: ".scrollElement",
 	start: "top top",
-	end: "45% 100%",
-	scrub: 3,
+	end: "+=200",
+	scrub: 4,
+	id: 'scene1',
+	markers: false,
 });
-
-
-/* S2 Text */
-let s1t = gsap.timeline();
-ScrollTrigger.create({
-	animation: s1t,
-	trigger: ".S1",
-	start: "top top",
-	end: '100',
-	duration: 1,
-	scrub: true
-});
-
-s1t.to("#S1", {
-	opacity: '0',
-	duration: 1.5
-})
-
-
-
-
-
-// hills animation 
 scene1.to("#h1-1", { y: 3 * speed, x: 1 * speed, scale: 0.9, ease: "power1.in" }, 0)
 scene1.to("#h1-2", { y: 2.6 * speed, x: -0.6 * speed, ease: "power1.in" }, 0)
 scene1.to("#h1-3", { y: 1.7 * speed, x: 1.2 * speed }, 0.03)
@@ -126,6 +108,24 @@ scene1.to("#h1-7", { y: 5 * speed, x: 1.6 * speed }, 0)
 scene1.to("#h1-8", { y: 3.5 * speed, x: 0.2 * speed }, 0)
 scene1.to("#h1-9", { y: 3.5 * speed, x: -0.2 * speed }, 0)
 
+/* S2 Text */
+let s1t = gsap.timeline();
+ScrollTrigger.create({
+	animation: s1t,
+	trigger: ".S1",
+	start: "top top",
+	end: "+=200",
+	scrub: true,
+	id: 'scene2',
+	duration: 1,
+});
+s1t.to("#S1", {
+	opacity: '0',
+	duration: 1.5
+})
+
+
+
 
 /*   Bird   */
 gsap.fromTo("#bird", { opacity: 1 }, {
@@ -135,7 +135,7 @@ gsap.fromTo("#bird", { opacity: 1 }, {
 	scrollTrigger: {
 		trigger: ".scrollElement",
 		start: "top top",
-		end: "60% 100%",
+		endTrigger: ".S2",
 		scrub: 4,
 		onEnter: function () { gsap.to("#bird", { scaleX: 1, rotation: 0 }) },
 		onLeave: function () { gsap.to("#bird", { scaleX: -1, rotation: -15 }) },
@@ -397,31 +397,31 @@ function s1Scroll() {
 	let tl = new TimelineMax({
 	});
 	tl.to(window, {
-		duration: 8,
+		/* 		duration: 8, */
 		scrollTo: '.S2',
-		ease: CustomEase.create("custom", "M0,0 C0.486,0 0.53,0.654 1,1  ")
+		/* 		ease: CustomEase.create("custom", "M0,0 C0.486,0 0.53,0.654 1,1  ") */
 	});
 }
 
 function s2Scroll() {
 	gsap.to(window, {
-		duration: 6,
+		/* 		duration: 6, */
 		scrollTo: '.S3',
-		ease: CustomEase.create("custom", "M0,0 C0.486,0 0.53,0.654 1,1  ")
+		/* 		ease: CustomEase.create("custom", "M0,0 C0.486,0 0.53,0.654 1,1  ") */
 	});
 }
 function s3Scroll() {
 	gsap.to(window, {
-		duration: 5,
+		/* 		duration: 5, */
 		scrollTo: '.S4Card',
 		ease: "sine.in",
 	});
 }
 function s4Scroll() {
 	gsap.to(window, {
-		duration: 10,
+		/* 		duration: 10, */
 		scrollTo: { y: 0, x: 0 },
-		ease: CustomEase.create("custom", "M0,0 C0.486,0 0.53,0.654 1,1  ")
+		/* 		ease: CustomEase.create("custom", "M0,0 C0.486,0 0.53,0.654 1,1  ") */
 	});
 }
 
@@ -517,7 +517,7 @@ function fadeOut() {
 	this.delay(3500).then(() => { this.textAnim() })
 }
 
-var carrotTl = gsap.timeline({ repeat: -1, yoyo: true, repeatDelay: 0 });
+/* var carrotTl = gsap.timeline({ repeat: -1, yoyo: true, repeatDelay: 0 });
 carrotTl.add('start')
 	.to('.S1Carrot', {
 		duration: 1,
@@ -533,7 +533,7 @@ carrotTl.add('start')
 		duration: 1,
 		y: -20,
 		ease: Power1.easeInOut
-	});
+	}); */
 
 function textAnim() {
 	var tl = new TimelineLite({ delay: 0.5 }),
@@ -624,3 +624,16 @@ function fullscreen() {
 		})
 	}
 }
+const options = {};
+const observationObject = document.querySelector('.S1text');
+const observer = new IntersectionObserver(function (entries, observer) {
+	entries.forEach(entry => {
+		if (entry.isIntersecting == false) {
+			console.log('Text Offscreen, Pausing Hill Animation')
+			scene1.pause()
+		}
+	})
+}, options)
+
+observer.observe(observationObject)
+
