@@ -397,31 +397,31 @@ function s1Scroll() {
 	let tl = new TimelineMax({
 	});
 	tl.to(window, {
-		/* 		duration: 8, */
+		duration: 8,
 		scrollTo: '.S2',
-		/* 		ease: CustomEase.create("custom", "M0,0 C0.486,0 0.53,0.654 1,1  ") */
+		ease: CustomEase.create("custom", "M0,0 C0.486,0 0.53,0.654 1,1  ")
 	});
 }
 
 function s2Scroll() {
 	gsap.to(window, {
-		/* 		duration: 6, */
+		duration: 6,
 		scrollTo: '.S3',
-		/* 		ease: CustomEase.create("custom", "M0,0 C0.486,0 0.53,0.654 1,1  ") */
+		ease: CustomEase.create("custom", "M0,0 C0.486,0 0.53,0.654 1,1  ")
 	});
 }
 function s3Scroll() {
 	gsap.to(window, {
-		/* 		duration: 5, */
+		duration: 5,
 		scrollTo: '.S4Card',
 		ease: "sine.in",
 	});
 }
 function s4Scroll() {
 	gsap.to(window, {
-		/* 		duration: 10, */
+		duration: 10,
 		scrollTo: { y: 0, x: 0 },
-		/* 		ease: CustomEase.create("custom", "M0,0 C0.486,0 0.53,0.654 1,1  ") */
+		ease: CustomEase.create("custom", "M0,0 C0.486,0 0.53,0.654 1,1  ")
 	});
 }
 
